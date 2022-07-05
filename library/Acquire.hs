@@ -18,6 +18,11 @@ acquireAndTerminate :: Acquire env -> Terminate env -> IO ()
 acquireAndTerminate (Acquire acquireIo) (Terminate terminateRdr) =
   bracket acquireIo snd (runReaderT terminateRdr . fst)
 
+-- |
+-- Run use on an acquired environment.
+useAcquired :: env -> Use env err res -> IO (Either err res)
+useAcquired env (Use (ReaderT run)) = run env & runExceptT
+
 -- * Acquire
 
 -- |
