@@ -18,12 +18,12 @@ import Control.Monad.ST as Exports
 import Control.Monad.State.Class as Exports
 import Control.Monad.Trans.Class as Exports
 import Control.Monad.Trans.Cont as Exports hiding (callCC, shift)
-import Control.Monad.Trans.Except as Exports (Except, ExceptT (ExceptT), catchE, except, mapExcept, mapExceptT, runExcept, runExceptT, throwE, withExcept, withExceptT)
-import Control.Monad.Trans.Maybe as Exports
+import Control.Monad.Trans.Except as Exports (Except, ExceptT (ExceptT), except, mapExcept, mapExceptT, runExcept, runExceptT, withExcept, withExceptT)
+import Control.Monad.Trans.Maybe as Exports (MaybeT (MaybeT), exceptToMaybeT, mapMaybeT, maybeToExceptT)
 import Control.Monad.Trans.Reader as Exports (Reader, ReaderT (ReaderT), mapReader, mapReaderT, runReader, runReaderT, withReader, withReaderT)
 import Control.Monad.Trans.State.Strict as Exports (State, StateT (StateT), evalState, evalStateT, execState, execStateT, mapState, mapStateT, runState, runStateT, withState, withStateT)
-import Control.Monad.Trans.Writer.Strict as Exports (Writer, WriterT (..), execWriter, execWriterT, mapWriter, mapWriterT, runWriter)
 import Control.Monad.Writer.Class as Exports
+import Control.Monad.Trans.Writer.Strict as Exports (Writer, WriterT (WriterT), execWriter, execWriterT, mapWriter, mapWriterT, runWriter)
 import Data.Bifunctor as Exports
 import Data.Bits as Exports
 import Data.Bool as Exports
