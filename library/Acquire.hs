@@ -1,34 +1,31 @@
-module Acquire
-where
+module Acquire where
 
 import Acquire.Prelude
 
-
 -- * IO
+
 -------------------------
 
-{-|
-Execute an action, which uses a resource,
-having a resource provider.
--}
+-- |
+-- Execute an action, which uses a resource,
+-- having a resource provider.
 acquireAndUse :: Acquire env -> Use env err res -> IO (Either err res)
 acquireAndUse (Acquire acquireIo) (Use useRdr) =
   bracket acquireIo snd (runExceptT . runReaderT useRdr . fst)
 
-
 -- * Acquire
+
 -------------------------
 
-{-|
-Resource provider.
-Abstracts over resource acquisition and releasing.
-
-Composes well, allowing you to merge multiple providers into one.
-
-Implementation of http://www.haskellforall.com/2013/06/the-resource-applicative.html
--}
-newtype Acquire env =
-  Acquire (IO (env, IO ()))
+-- |
+-- Resource provider.
+-- Abstracts over resource acquisition and releasing.
+--
+-- Composes well, allowing you to merge multiple providers into one.
+--
+-- Implementation of http://www.haskellforall.com/2013/06/the-resource-applicative.html
+newtype Acquire env
+  = Acquire (IO (env, IO ()))
 
 instance Functor Acquire where
   fmap f (Acquire io) =
@@ -55,15 +52,14 @@ instance Monad Acquire where
 
 instance MonadIO Acquire where
   liftIO io =
-    Acquire (fmap (, return ()) io)
-
+    Acquire (fmap (,return ()) io)
 
 -- * Use
+
 -------------------------
 
-{-|
-Resource handler, which has a notion of pure errors.
--}
+-- |
+-- Resource handler, which has a notion of pure errors.
 newtype Use env err res = Use (ReaderT env (ExceptT err IO) res)
   deriving (Functor, Applicative, Alternative, Monad, MonadPlus, MonadIO)
 
@@ -71,20 +67,17 @@ instance Bifunctor (Use env) where
   first = mapErr
   second = fmap
 
-{-|
-Map the environment of a resource handler.
--}
+-- |
+-- Map the environment of a resource handler.
 mapEnv :: (b -> a) -> Use a err res -> Use b err res
 mapEnv fn (Use rdr) = Use (withReaderT fn rdr)
 
-{-|
-Map the error of a resource handler.
--}
+-- |
+-- Map the error of a resource handler.
 mapErr :: (a -> b) -> Use env a res -> Use env b res
 mapErr fn (Use rdr) = Use (mapReaderT (withExceptT fn) rdr)
 
-{-|
-Map both the environment and the error of a resource handler.
--}
+-- |
+-- Map both the environment and the error of a resource handler.
 mapEnvAndErr :: (envB -> envA) -> (errA -> errB) -> Use envA errA res -> Use envB errB res
 mapEnvAndErr envProj errProj (Use rdr) = Use (withReaderT envProj (mapReaderT (withExceptT errProj) rdr))
