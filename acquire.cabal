@@ -10,8 +10,10 @@ category:      Resources
 homepage:      https://github.com/metrix-ai/acquire
 bug-reports:   https://github.com/metrix-ai/acquire/issues
 author:        Nikita Volkov <nikita.y.volkov@mail.ru>
-maintainer:    Metrix.AI Tech Team <tech@metrix.ai>
-copyright:     (c) 2013 Gabriel Gonzalez, 2018 Metrix.AI
+maintainer:    Nikita Volkov <nikita.y.volkov@mail.ru>
+copyright:
+  (c) 2013 Gabriel Gonzalez, 2018 Metrix.AI, 2020 Nikita Volkov
+
 license:       MIT
 license-file:  LICENSE
 build-type:    Simple
@@ -66,4 +68,4 @@ library
   other-modules:      Acquire.Prelude
   build-depends:
     , base >=4.9 && <5
-    , transformers >=0.5 && <0.7
+    , transformers >=0.5 && <0.8
