@@ -4,8 +4,6 @@ import Acquire.Prelude
 
 -- * IO
 
--------------------------
-
 -- |
 -- Execute an action, which uses a resource,
 -- having a resource provider.
@@ -20,8 +18,6 @@ useAcquired env (Use (ReaderT run)) =
   run env & runExceptT
 
 -- * Acquire
-
--------------------------
 
 -- |
 -- Resource provider.
@@ -61,8 +57,6 @@ instance MonadIO Acquire where
     Acquire (fmap (,return ()) io)
 
 -- * Use
-
--------------------------
 
 -- |
 -- Resource handler, which has a notion of pure errors.
