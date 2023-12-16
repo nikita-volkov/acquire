@@ -1,6 +1,6 @@
 cabal-version: 3.0
 name:          acquire
-version:       0.3.1.2
+version:       0.3.2
 synopsis:      Abstraction over management of resources
 description:
   An implementation of the abstraction suggested in
@@ -68,4 +68,5 @@ library
   other-modules:      Acquire.Prelude
   build-depends:
     , base >=4.9 && <5
+    , mtl >=2.3 && <3
     , transformers >=0.5 && <0.8
