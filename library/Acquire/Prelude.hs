@@ -12,6 +12,7 @@ import Control.Monad as Exports hiding (forM, forM_, mapM, mapM_, msum, sequence
 import Control.Monad.Error.Class as Exports
 import Control.Monad.Fix as Exports hiding (fix)
 import Control.Monad.IO.Class as Exports
+import Control.Monad.Reader.Class as Exports
 import Control.Monad.ST as Exports
 import Control.Monad.Trans.Class as Exports
 import Control.Monad.Trans.Cont as Exports hiding (callCC, shift)
