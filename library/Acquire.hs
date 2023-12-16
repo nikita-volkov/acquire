@@ -4,8 +4,6 @@ import Acquire.Prelude
 
 -- * IO
 
--------------------------
-
 -- |
 -- Execute an action, which uses a resource,
 -- having a resource provider.
@@ -13,9 +11,13 @@ acquireAndUse :: Acquire env -> Use env err res -> IO (Either err res)
 acquireAndUse (Acquire acquireIo) (Use useRdr) =
   bracket acquireIo snd (runExceptT . runReaderT useRdr . fst)
 
--- * Acquire
+-- |
+-- Run use on an acquired environment.
+useAcquired :: env -> Use env err res -> IO (Either err res)
+useAcquired env (Use (ReaderT run)) =
+  run env & runExceptT
 
--------------------------
+-- * Acquire
 
 -- |
 -- Resource provider.
@@ -55,8 +57,6 @@ instance MonadIO Acquire where
     Acquire (fmap (,return ()) io)
 
 -- * Use
-
--------------------------
 
 -- |
 -- Resource handler, which has a notion of pure errors.
