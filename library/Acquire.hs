@@ -13,6 +13,12 @@ acquireAndUse :: Acquire env -> Use env err res -> IO (Either err res)
 acquireAndUse (Acquire acquireIo) (Use useRdr) =
   bracket acquireIo snd (runExceptT . runReaderT useRdr . fst)
 
+-- |
+-- Run use on an acquired environment.
+useAcquired :: env -> Use env err res -> IO (Either err res)
+useAcquired env (Use (ReaderT run)) =
+  run env & runExceptT
+
 -- * Acquire
 
 -------------------------
