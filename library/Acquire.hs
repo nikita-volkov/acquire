@@ -57,9 +57,9 @@ instance MonadIO Acquire where
     Acquire (fmap (,return ()) io)
 
 -- | Construct 'Acquire' by specifying a resource initializer and finalizer actions.
-startAndStop :: 
+startAndStop ::
   -- | Start the service.
-  IO a -> 
+  IO a ->
   -- | Stop the service.
   (a -> IO ()) ->
   Acquire a
