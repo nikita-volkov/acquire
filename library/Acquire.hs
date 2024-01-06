@@ -56,6 +56,18 @@ instance MonadIO Acquire where
   liftIO io =
     Acquire (fmap (,return ()) io)
 
+-- | Construct 'Acquire' by specifying a resource initializer and finalizer actions.
+startAndStop ::
+  -- | Start the service.
+  IO a ->
+  -- | Stop the service.
+  (a -> IO ()) ->
+  Acquire a
+startAndStop start stop =
+  Acquire $ do
+    logger <- start
+    pure (logger, stop logger)
+
 -- * Use
 
 -- |
