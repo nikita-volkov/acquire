@@ -5,6 +5,12 @@ import Acquire.Prelude
 -- * IO
 
 -- |
+-- Acquire resources and use them by lifting IO into acquire.
+acquire :: Acquire.Acquire a -> IO a
+acquire (Acquire.Acquire setup) =
+  bracket setup snd (pure . fst)
+
+-- |
 -- Execute an action, which uses a resource,
 -- having a resource provider.
 acquireAndUse :: Acquire env -> Use env err res -> IO (Either err res)
